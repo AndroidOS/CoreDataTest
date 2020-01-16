@@ -10,7 +10,7 @@ import Foundation
 import CoreLocation
 
 protocol  BitcoinDataManagerDelegate {
-    func didUpdateBitcoin()
+    func didUpdateBitcoin(prices: [String: Double])
 }
 
 struct BitcoinDataManager {
@@ -37,9 +37,6 @@ struct BitcoinDataManager {
                 }
                 
                 if let safeData = data {
-                    print(safeData)
-                    //let dataString = String(data: safeData, encoding: .utf8)
-                    //print(dataString)
                     self.parseJSON(bitcoinData: safeData)
                 }
             }
@@ -55,9 +52,9 @@ struct BitcoinDataManager {
         do {
             if let json = try JSONSerialization.jsonObject(with: bitcoinData, options: []) as? [String: Any] {
                 // try to read out a string array
-                if let values = json["bpi"] as? [String: Any] {
-                    print(values)
-                    self.delegate?.didUpdateBitcoin()
+                if let values = json["bpi"] as? [String: Double] {
+                    
+                    self.delegate?.didUpdateBitcoin(prices: values)
                 }
             }
         } catch let error as NSError {

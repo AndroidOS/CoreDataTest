@@ -11,6 +11,7 @@ import UIKit
 class ViewController: UIViewController, BitcoinDataManagerDelegate {
     
     var dataManager = BitcoinDataManager()
+    var priceList = [Price]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -19,9 +20,17 @@ class ViewController: UIViewController, BitcoinDataManagerDelegate {
         dataManager.fetchBitcoinData()
     }
 
-
-    func didUpdateBitcoin() {
-        print("didUpdateBitcoin")
+    func didUpdateBitcoin(prices: [String : Double]) {
+        
+        for price in prices {
+            let priceElement = Price(date: price.key, price: price.value)
+            priceList.append(priceElement)
+        }
+        
+        print(priceList.count)
     }
+    
+    
+    
 }
 
