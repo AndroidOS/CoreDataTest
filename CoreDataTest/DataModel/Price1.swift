@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct Price {
+struct Price1 {
     let date:String?
     let price: Double?
 }
